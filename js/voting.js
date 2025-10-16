@@ -1,7 +1,14 @@
 // Voting System JavaScript with Real-time MongoDB Integration
 class VotingSystem {
   constructor() {
-    this.baseURL = "http://localhost:3000/api";
+    // Use configuration from config.js if available, otherwise fallback to localhost
+    const config = window.APP_CONFIG || {
+      API_BASE_URL: "http://localhost:3000/api",
+      API_URL: "http://localhost:3000",
+    };
+
+    this.baseURL = config.API_BASE_URL;
+    this.socketURL = config.API_URL;
     this.contestants = [];
     this.votingStatus = {
       dailyVoteCount: 0,
@@ -30,7 +37,7 @@ class VotingSystem {
 
   connectSocket() {
     try {
-      this.socket = io("http://localhost:3000");
+      this.socket = io(this.socketURL);
 
       this.socket.on("connect", () => {
         console.log("✅ Connected to voting server");
