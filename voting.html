@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Memes Muthyam - Vote for your favorite Bigg Boss Telugu contestants. Your vote matters!"
+    />
+    <meta
+      name="keywords"
+      content="Memes Muthyam, Bigg Boss Telugu voting, contestants, reality show voting"
+    />
+    <meta name="author" content="Memes Muthyam" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta
+      property="og:title"
+      content="Memes Muthyam - Vote for Bigg Boss Telugu Contestants"
+    />
+    <meta
+      property="og:description"
+      content="Memes Muthyam - Vote for your favorite Bigg Boss Telugu contestants. Your vote matters!"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-domain.com/voting.html" />
+    <meta
+      property="og:image"
+      content="https://your-domain.com/images/voting-og.jpg"
+    />
+
+    <title>Memes Muthyam - Vote for Bigg Boss Telugu Contestants</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/voting.css" />
+    <link rel="canonical" href="https://your-domain.com/voting.html" />
+
+    <!-- Google AdSense -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="index.html">
+              <img src="images/logo.png" alt="Memes Muthyam" class="logo" />
+              <img
+                src="images/Brand.png"
+                alt="Memes Muthyam"
+                class="logo-text"
+              />
+            </a>
+          </div>
+
+          <div class="nav-menu" id="nav-menu">
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="voting.html" class="nav-link active">Vote</a>
+              </li>
+              <li class="nav-item">
+                <a href="about.html" class="nav-link">About</a>
+              </li>
+              <li class="nav-item">
+                <a href="contact.html" class="nav-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav-toggle" id="nav-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Voting Hero Section -->
+    <section class="voting-hero">
+      <div class="container">
+        <div class="voting-hero-content">
+          <h1 class="voting-title">Vote for Your Favorite Contestant</h1>
+          <p class="voting-subtitle">
+            Your vote can make a difference! Choose your favorite contestant to
+            help them stay in the Bigg Boss house.
+          </p>
+          <div class="voting-stats">
+            <div class="stat-card">
+              <div class="stat-number" id="total-votes">15,432</div>
+              <div class="stat-label">Total Votes</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">8</div>
+              <div class="stat-label">Contestants</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="your-votes">0</div>
+              <div class="stat-label">Your Votes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ad Space -->
+    <section class="ad-section">
+      <div class="container">
+        <ins
+          class="adsbygoogle"
+          style="display: block"
+          data-ad-client="ca-pub-XXXXXXXXXX"
+          data-ad-slot="XXXXXXXXXX"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+      </div>
+    </section>
+
+    <!-- Voting Section -->
+    <section class="voting-section">
+      <div class="container">
+        <div class="voting-info">
+          <h2>Contestants</h2>
+          <p>
+            Click on your favorite contestant to vote. You can vote once per
+            day.
+          </p>
+          <div class="voting-status" id="voting-status">
+            <i class="fas fa-info-circle"></i>
+            <span>You can vote for any contestant</span>
+          </div>
+        </div>
+
+        <div class="contestants-grid" id="contestants-grid">
+          <!-- Contestant 1 -->
+          <div class="contestant-card" data-contestant="1">
+            <div class="contestant-image">
+              <img
+                src="images/contestant-1.jpg"
+                alt="Contestant 1"
+                class="contestant-img"
+              />
+              <div class="contestant-overlay">
+                <button class="vote-btn" data-contestant="1">
+                  <i class="fas fa-vote-yea"></i>
+                  Vote
+                </button>
+              </div>
+            </div>
+            <div class="contestant-info">
+              <h3 class="contestant-name">Contestant 1</h3>
+              <p class="contestant-description">
+                Popular contestant with strong fan base
+              </p>
+              <div class="contestant-stats">
+                <div class="vote-count">
+                  <i class="fas fa-heart"></i>
+                  <span class="votes" data-votes="1">2,456</span> votes
+                </div>
+                <div class="vote-percentage">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 32%"></div>
+                  </div>
+                  <span class="percentage">32%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contestant 2 -->
+          <div class="contestant-card" data-contestant="2">
+            <div class="contestant-image">
+              <img
+                src="images/contestant-2.jpg"
+                alt="Contestant 2"
+                class="contestant-img"
+              />
+              <div class="contestant-overlay">
+                <button class="vote-btn" data-contestant="2">
+                  <i class="fas fa-vote-yea"></i>
+                  Vote
+                </button>
+              </div>
+            </div>
+            <div class="contestant-info">
+              <h3 class="contestant-name">Contestant 2</h3>
+              <p class="contestant-description">
+                Drama queen with entertaining personality
+              </p>
+              <div class="contestant-stats">
+                <div class="vote-count">
+                  <i class="fas fa-heart"></i>
+                  <span class="votes" data-votes="2">1,892</span> votes
+                </div>
+                <div class="vote-percentage">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 25%"></div>
+                  </div>
+                  <span class="percentage">25%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contestant 3 -->
+          <div class="contestant-card" data-contestant="3">
+            <div class="contestant-image">
+              <img
+                src="images/contestant-3.jpg"
+                alt="Contestant 3"
+                class="contestant-img"
+              />
+              <div class="contestant-overlay">
+                <button class="vote-btn" data-contestant="3">
+                  <i class="fas fa-vote-yea"></i>
+                  Vote
+                </button>
+              </div>
+            </div>
+            <div class="contestant-info">
+              <h3 class="contestant-name">Contestant 3</h3>
+              <p class="contestant-description">
+                Strategic player with good game sense
+              </p>
+              <div class="contestant-stats">
+                <div class="vote-count">
+                  <i class="fas fa-heart"></i>
+                  <span class="votes" data-votes="3">2,134</span> votes
+                </div>
+                <div class="vote-percentage">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 28%"></div>
+                  </div>
+                  <span class="percentage">28%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contestant 4 -->
+          <div class="contestant-card" data-contestant="4">
+            <div class="contestant-image">
+              <img
+                src="images/contestant-4.jpg"
+                alt="Contestant 4"
+                class="contestant-img"
+              />
+              <div class="contestant-overlay">
+                <button class="vote-btn" data-contestant="4">
+                  <i class="fas fa-vote-yea"></i>
+                  Vote
+                </button>
+              </div>
+            </div>
+            <div class="contestant-info">
+              <h3 class="contestant-name">Contestant 4</h3>
+              <p class="contestant-description">
+                Underdog with surprising popularity
+              </p>
+              <div class="contestant-stats">
+                <div class="vote-count">
+                  <i class="fas fa-heart"></i>
+                  <span class="votes" data-votes="4">1,567</span> votes
+                </div>
+                <div class="vote-percentage">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 20%"></div>
+                  </div>
+                  <span class="percentage">20%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contestant 5 -->
+          <div class="contestant-card" data-contestant="5">
+            <div class="contestant-image">
+              <img
+                src="images/contestant-5.jpg"
+                alt="Contestant 5"
+                class="contestant-img"
+              />
+              <div class="contestant-overlay">
+                <button class="vote-btn" data-contestant="5">
+                  <i class="fas fa-vote-yea"></i>
+                  Vote
+                </button>
+              </div>
+            </div>
+            <div class="contestant-info">
+              <h3 class="contestant-name">Contestant 5</h3>
+              <p class="contestant-description">
+                Comedy king with great entertainment value
+              </p>
+              <div class="contestant-stats">
+                <div class="vote-count">
+                  <i class="fas fa-heart"></i>
+                  <span class="votes" data-votes="5">1,234</span> votes
+                </div>
+                <div class="vote-percentage">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 16%"></div>
+                  </div>
+                  <span class="percentage">16%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contestant 6 -->
+          <div class="contestant-card" data-contestant="6">
+            <div class="contestant-image">
+              <img
+                src="images/contestant-6.jpg"
+                alt="Contestant 6"
+                class="contestant-img"
+              />
+              <div class="contestant-overlay">
+                <button class="vote-btn" data-contestant="6">
+                  <i class="fas fa-vote-yea"></i>
+                  Vote
+                </button>
+              </div>
+            </div>
+            <div class="contestant-info">
+              <h3 class="contestant-name">Contestant 6</h3>
+              <p class="contestant-description">
+                Strong personality with leadership qualities
+              </p>
+              <div class="contestant-stats">
+                <div class="vote-count">
+                  <i class="fas fa-heart"></i>
+                  <span class="votes" data-votes="6">1,789</span> votes
+                </div>
+                <div class="vote-percentage">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 23%"></div>
+                  </div>
+                  <span class="percentage">23%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contestant 7 -->
+          <div class="contestant-card" data-contestant="7">
+            <div class="contestant-image">
+              <img
+                src="images/contestant-7.jpg"
+                alt="Contestant 7"
+                class="contestant-img"
+              />
+              <div class="contestant-overlay">
+                <button class="vote-btn" data-contestant="7">
+                  <i class="fas fa-vote-yea"></i>
+                  Vote
+                </button>
+              </div>
+            </div>
+            <div class="contestant-info">
+              <h3 class="contestant-name">Contestant 7</h3>
+              <p class="contestant-description">
+                Emotional and relatable contestant
+              </p>
+              <div class="contestant-stats">
+                <div class="vote-count">
+                  <i class="fas fa-heart"></i>
+                  <span class="votes" data-votes="7">1,456</span> votes
+                </div>
+                <div class="vote-percentage">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 19%"></div>
+                  </div>
+                  <span class="percentage">19%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contestant 8 -->
+          <div class="contestant-card" data-contestant="8">
+            <div class="contestant-image">
+              <img
+                src="images/contestant-8.jpg"
+                alt="Contestant 8"
+                class="contestant-img"
+              />
+              <div class="contestant-overlay">
+                <button class="vote-btn" data-contestant="8">
+                  <i class="fas fa-vote-yea"></i>
+                  Vote
+                </button>
+              </div>
+            </div>
+            <div class="contestant-info">
+              <h3 class="contestant-name">Contestant 8</h3>
+              <p class="contestant-description">
+                Wildcard entry with unpredictable nature
+              </p>
+              <div class="contestant-stats">
+                <div class="vote-count">
+                  <i class="fas fa-heart"></i>
+                  <span class="votes" data-votes="8">1,123</span> votes
+                </div>
+                <div class="vote-percentage">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 15%"></div>
+                  </div>
+                  <span class="percentage">15%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Sharing -->
+        <div class="voting-share">
+          <h3>Share the Voting Page</h3>
+          <p>Let your friends know about the voting!</p>
+          <div class="social-share-buttons">
+            <button class="share-btn facebook" data-platform="facebook">
+              <i class="fab fa-facebook"></i>
+              Share on Facebook
+            </button>
+            <button class="share-btn twitter" data-platform="twitter">
+              <i class="fab fa-twitter"></i>
+              Share on Twitter
+            </button>
+            <button class="share-btn whatsapp" data-platform="whatsapp">
+              <i class="fab fa-whatsapp"></i>
+              Share on WhatsApp
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vote Confirmation Modal -->
+    <div class="modal" id="vote-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Confirm Your Vote</h3>
+          <button class="modal-close" id="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="contestant-preview">
+            <img id="modal-contestant-img" src="" alt="Contestant" />
+            <div class="contestant-details">
+              <h4 id="modal-contestant-name"></h4>
+              <p id="modal-contestant-description"></p>
+            </div>
+          </div>
+          <p class="vote-confirmation-text">
+            Are you sure you want to vote for this contestant?
+          </p>
+          <div class="modal-actions">
+            <button class="btn btn-secondary" id="cancel-vote">Cancel</button>
+            <button class="btn btn-primary" id="confirm-vote">
+              Confirm Vote
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="toast" id="success-toast">
+      <div class="toast-content">
+        <i class="fas fa-check-circle"></i>
+        <span>Vote submitted successfully!</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3 class="footer-title">Memes Muthyam</h3>
+            <p class="footer-description">
+              Your ultimate destination for Bigg Boss Telugu memes, voting, and
+              updates.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="voting.html">Vote</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Legal</h4>
+            <ul class="footer-links">
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="terms-of-service.html">Terms of Service</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Newsletter</h4>
+            <p class="newsletter-text">Subscribe for latest updates</p>
+            <form class="newsletter-form">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                class="newsletter-input"
+                required
+              />
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 Memes Muthyam. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Socket.IO -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/voting.js"></script>
+    <script src="js/social-share.js"></script>
+
+    <!-- Google AdSense -->
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Contact Memes Muthyam team. Get in touch for collaborations, feedback, or any inquiries about our content and voting system."
+    />
+    <meta
+      name="keywords"
+      content="contact, Memes Muthyam, Bigg Boss Telugu, feedback, collaboration, support"
+    />
+    <meta name="author" content="Memes Muthyam" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Contact Memes Muthyam" />
+    <meta
+      property="og:description"
+      content="Get in touch with our team for collaborations, feedback, or any inquiries about our content and voting system."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-domain.com/contact.html" />
+    <meta
+      property="og:image"
+      content="https://your-domain.com/images/contact-og.jpg"
+    />
+
+    <title>Contact Us - Memes Muthyam</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="canonical" href="https://your-domain.com/contact.html" />
+
+    <!-- Google AdSense -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="index.html">
+              <img src="images/logo.png" alt="Memes Muthyam" class="logo" />
+              <img
+                src="images/Brand.png"
+                alt="Memes Muthyam"
+                class="logo-text"
+              />
+            </a>
+          </div>
+
+          <div class="nav-menu" id="nav-menu">
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="voting.html" class="nav-link">Vote</a>
+              </li>
+              <li class="nav-item">
+                <a href="about.html" class="nav-link">About</a>
+              </li>
+              <li class="nav-item">
+                <a href="contact.html" class="nav-link active">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav-toggle" id="nav-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+      <!-- Contact Hero Section -->
+      <section class="contact-hero">
+        <div class="container">
+          <div class="contact-hero-content">
+            <h1 class="contact-title">Get in Touch</h1>
+            <p class="contact-subtitle">
+              We'd love to hear from you! Send us a message and we'll respond as
+              soon as possible.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ad Space -->
+      <section class="ad-section">
+        <div class="container">
+          <ins
+            class="adsbygoogle"
+            style="display: block"
+            data-ad-client="ca-pub-XXXXXXXXXX"
+            data-ad-slot="XXXXXXXXXX"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+        </div>
+      </section>
+
+      <!-- Contact Content -->
+      <section class="contact-content">
+        <div class="container">
+          <div class="contact-grid">
+            <!-- Contact Form -->
+            <div class="contact-form-section">
+              <h2>Send us a Message</h2>
+              <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                  <label for="name">Full Name *</label>
+                  <input type="text" id="name" name="name" required />
+                  <span class="error-message" id="name-error"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email Address *</label>
+                  <input type="email" id="email" name="email" required />
+                  <span class="error-message" id="email-error"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" />
+                  <span class="error-message" id="phone-error"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="subject">Subject *</label>
+                  <select id="subject" name="subject" required>
+                    <option value="">Select a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="collaboration">Collaboration</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="technical">Technical Support</option>
+                    <option value="voting">Voting Issues</option>
+                    <option value="content">Content Suggestion</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <span class="error-message" id="subject-error"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="message">Message *</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
+                    required
+                    placeholder="Tell us what's on your mind..."
+                  ></textarea>
+                  <span class="error-message" id="message-error"></span>
+                </div>
+
+                <div class="form-group checkbox-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="newsletter" name="newsletter" />
+                    <span class="checkmark"></span>
+                    Subscribe to our newsletter for latest updates
+                  </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                  <label class="checkbox-label">
+                    <input
+                      type="checkbox"
+                      id="privacy"
+                      name="privacy"
+                      required
+                    />
+                    <span class="checkmark"></span>
+                    I agree to the
+                    <a href="privacy-policy.html" target="_blank"
+                      >Privacy Policy</a
+                    >
+                    and
+                    <a href="terms-of-service.html" target="_blank"
+                      >Terms of Service</a
+                    >
+                    *
+                  </label>
+                  <span class="error-message" id="privacy-error"></span>
+                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-large"
+                  id="submit-btn"
+                >
+                  <span class="btn-text">Send Message</span>
+                  <span class="btn-loading" style="display: none">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Sending...
+                  </span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info-section">
+              <h2>Contact Information</h2>
+              <div class="contact-info">
+                <div class="info-item">
+                  <div class="info-icon">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div class="info-content">
+                    <h4>Email Us</h4>
+                    <p>info@biggboosstelugu.com</p>
+                    <p>support@biggboosstelugu.com</p>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-icon">
+                    <i class="fas fa-phone"></i>
+                  </div>
+                  <div class="info-content">
+                    <h4>Call Us</h4>
+                    <p>+91 98765 43210</p>
+                    <p>Mon - Fri, 9:00 AM - 6:00 PM</p>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div class="info-content">
+                    <h4>Visit Us</h4>
+                    <p>
+                      123 Tech Street<br />
+                      Hyderabad, Telangana 500001<br />
+                      India
+                    </p>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="info-content">
+                    <h4>Business Hours</h4>
+                    <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    <p>Saturday: 10:00 AM - 4:00 PM</p>
+                    <p>Sunday: Closed</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="social-contact">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                  <a href="#" class="social-link" aria-label="Facebook">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                  </a>
+                  <a href="#" class="social-link" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                  </a>
+                  <a href="#" class="social-link" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                  </a>
+                  <a href="#" class="social-link" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                    <span>YouTube</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <div class="container">
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <div class="faq-grid">
+            <div class="faq-item">
+              <div class="faq-question">
+                <h4>How does the voting system work?</h4>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Our voting system allows you to vote for your favorite
+                  contestants once per day. Votes are tracked using cookies and
+                  IP addresses to ensure fair voting. You can vote for any
+                  contestant by clicking on their card.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h4>Can I submit my own memes?</h4>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Yes! We love user-generated content. You can submit your memes
+                  through our contact form or tag us on social media. The best
+                  memes will be featured on our blog with proper credit.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h4>How often is the content updated?</h4>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  We update our content daily during the Bigg Boss season. New
+                  memes, voting updates, and blog posts are published regularly
+                  to keep you engaged with the latest happenings.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h4>Is the website mobile-friendly?</h4>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Absolutely! Our website is fully responsive and optimized for
+                  mobile devices. You can vote, read articles, and share content
+                  seamlessly on any device.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h4>How can I collaborate with you?</h4>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  We're always open to collaborations! Whether you're a content
+                  creator, influencer, or brand, reach out to us through our
+                  contact form with your collaboration proposal.
+                </p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-question">
+                <h4>Do you have a mobile app?</h4>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  Currently, we don't have a mobile app, but our website is
+                  fully optimized for mobile browsers. We're working on a mobile
+                  app that will be available soon!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3 class="footer-title">Memes Muthyam</h3>
+            <p class="footer-description">
+              Your ultimate destination for Bigg Boss Telugu memes, voting, and
+              updates.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="voting.html">Vote</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Legal</h4>
+            <ul class="footer-links">
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="terms-of-service.html">Terms of Service</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Newsletter</h4>
+            <p class="newsletter-text">Subscribe for latest updates</p>
+            <form class="newsletter-form">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                class="newsletter-input"
+                required
+              />
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 Memes Muthyam. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/social-share.js"></script>
+
+    <!-- Google AdSense -->
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </body>
+</html>

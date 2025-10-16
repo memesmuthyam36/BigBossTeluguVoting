@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Memes Muthyam - All Bigg Boss Telugu blog posts, memes, and latest updates"
+    />
+    <meta
+      name="keywords"
+      content="Memes Muthyam, Bigg Boss Telugu, blog posts, memes, updates, analysis"
+    />
+    <meta name="author" content="Memes Muthyam" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Blog - Memes Muthyam" />
+    <meta
+      property="og:description"
+      content="Read all Bigg Boss Telugu blog posts, memes, and latest updates on Memes Muthyam"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-domain.com/blog.html" />
+    <meta
+      property="og:image"
+      content="https://your-domain.com/images/blog-og.jpg"
+    />
+
+    <title>Blog - Memes Muthyam</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/blog.css" />
+    <link rel="canonical" href="https://your-domain.com/blog.html" />
+
+    <!-- Google AdSense -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="index.html">
+              <img src="images/logo.png" alt="Memes Muthyam" class="logo" />
+              <img
+                src="images/Brand.png"
+                alt="Memes Muthyam"
+                class="logo-text"
+              />
+            </a>
+          </div>
+
+          <div class="nav-menu" id="nav-menu">
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">Home</a>
+              </li>
+              <li class="nav-item">
+                <a href="voting.html" class="nav-link">Vote</a>
+              </li>
+              <li class="nav-item">
+                <a href="blog.html" class="nav-link active">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="about.html" class="nav-link">About</a>
+              </li>
+              <li class="nav-item">
+                <a href="contact.html" class="nav-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="nav-toggle" id="nav-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+      <div class="container">
+        <div class="blog-hero-content">
+          <h1 class="blog-hero-title">Blog Posts</h1>
+          <p class="blog-hero-subtitle">
+            Stay updated with the latest Bigg Boss Telugu memes, analysis, and
+            behind-the-scenes content
+          </p>
+
+          <!-- Category Filter -->
+          <div class="blog-filters">
+            <button class="filter-btn active" data-category="all">
+              All Posts
+            </button>
+            <button class="filter-btn" data-category="memes">Memes</button>
+            <button class="filter-btn" data-category="analysis">
+              Analysis
+            </button>
+            <button class="filter-btn" data-category="behind-scenes">
+              Behind Scenes
+            </button>
+            <button class="filter-btn" data-category="updates">Updates</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ad Space -->
+    <section class="ad-section">
+      <div class="container">
+        <ins
+          class="adsbygoogle"
+          style="display: block"
+          data-ad-client="ca-pub-XXXXXXXXXX"
+          data-ad-slot="XXXXXXXXXX"
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        ></ins>
+      </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="blog-posts-section">
+      <div class="container">
+        <!-- Loading State -->
+        <div id="blog-loading" class="blog-loading">
+          <div class="loading-spinner"></div>
+          <p>Loading blog posts...</p>
+        </div>
+
+        <!-- Blog Posts Grid -->
+        <div id="blog-posts-grid" class="blog-posts-grid" style="display: none">
+          <!-- Posts will be loaded dynamically -->
+        </div>
+
+        <!-- No Posts Message -->
+        <div id="no-posts-message" class="no-posts" style="display: none">
+          <i class="fas fa-newspaper"></i>
+          <h3>No posts found</h3>
+          <p>We're working on new content. Check back soon!</p>
+        </div>
+
+        <!-- Pagination -->
+        <div id="blog-pagination" class="blog-pagination" style="display: none">
+          <button id="prev-page" class="pagination-btn" disabled>
+            <i class="fas fa-chevron-left"></i> Previous
+          </button>
+          <div class="pagination-info">
+            <span id="current-page">1</span> of <span id="total-pages">1</span>
+          </div>
+          <button id="next-page" class="pagination-btn">
+            Next <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3 class="footer-title">Memes Muthyam</h3>
+            <p class="footer-description">
+              Your ultimate destination for Bigg Boss Telugu memes, voting, and
+              updates.
+            </p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Facebook">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="social-link" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Quick Links</h4>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="voting.html">Vote</a></li>
+              <li><a href="blog.html">Blog</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Legal</h4>
+            <ul class="footer-links">
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="terms-of-service.html">Terms of Service</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 class="footer-subtitle">Newsletter</h4>
+            <p class="newsletter-text">Subscribe for latest updates</p>
+            <form class="newsletter-form">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                class="newsletter-input"
+                required
+              />
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 Memes Muthyam. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Socket.IO -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/blog.js"></script>
+    <script src="js/social-share.js"></script>
+
+    <!-- Google AdSense -->
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </body>
+</html>
