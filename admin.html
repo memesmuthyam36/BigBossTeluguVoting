@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel - Memes Muthyam</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="index.html">
+              <img src="images/logo.png" alt="Memes Muthyam" class="logo" />
+              <img
+                src="images/Brand.png"
+                alt="Memes Muthyam"
+                class="logo-text"
+              />
+            </a>
+          </div>
+
+          <div class="admin-user">
+            <i class="fas fa-user-shield"></i>
+            <span>Admin Panel</span>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Admin Content -->
+    <main class="admin-main">
+      <div class="container">
+        <div class="admin-header">
+          <h1>Admin Dashboard</h1>
+          <p>Manage contestants and blog posts</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="admin-tabs">
+          <button class="tab-btn active" data-tab="contestants">
+            <i class="fas fa-users"></i> Contestants
+          </button>
+          <button class="tab-btn" data-tab="blogs">
+            <i class="fas fa-blog"></i> Blog Posts
+          </button>
+        </div>
+
+        <!-- Contestants Tab -->
+        <div class="tab-content active" id="contestants-tab">
+          <div class="admin-section">
+            <div class="section-header">
+              <h2>Manage Contestants</h2>
+              <button class="btn btn-primary" id="add-contestant-btn">
+                <i class="fas fa-plus"></i> Add Contestant
+              </button>
+            </div>
+
+            <!-- Contestants List -->
+            <div class="contestants-list" id="contestants-list">
+              <div class="loading">Loading contestants...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blogs Tab -->
+        <div class="tab-content" id="blogs-tab">
+          <div class="admin-section">
+            <div class="section-header">
+              <h2>Manage Blog Posts</h2>
+              <button class="btn btn-primary" id="add-blog-btn">
+                <i class="fas fa-plus"></i> Add Blog Post
+              </button>
+            </div>
+
+            <!-- Blogs List -->
+            <div class="blogs-list" id="blogs-list">
+              <div class="loading">Loading blog posts...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Contestant Modal -->
+    <div class="modal" id="contestant-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="contestant-modal-title">Add Contestant</h3>
+          <button class="modal-close" id="contestant-modal-close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="contestant-form">
+          <input type="hidden" id="contestant-id" />
+
+          <div class="form-group">
+            <label for="contestant-name">Name *</label>
+            <input
+              type="text"
+              id="contestant-name"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="contestant-description">Description *</label>
+            <textarea
+              id="contestant-description"
+              class="form-control"
+              rows="3"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="contestant-image">Image URL *</label>
+            <input
+              type="text"
+              id="contestant-image"
+              class="form-control"
+              placeholder="images/contestant-name.png"
+              required
+            />
+            <small>Enter relative path to image in images folder</small>
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="cancel-contestant"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Blog Modal -->
+    <div class="modal" id="blog-modal">
+      <div class="modal-content blog-modal-content">
+        <div class="modal-header">
+          <h3 id="blog-modal-title">Add Blog Post</h3>
+          <button class="modal-close" id="blog-modal-close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="blog-form">
+          <input type="hidden" id="blog-id" />
+
+          <div class="form-group">
+            <label for="blog-title">Title *</label>
+            <input type="text" id="blog-title" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="blog-slug">Slug *</label>
+            <input
+              type="text"
+              id="blog-slug"
+              class="form-control"
+              placeholder="my-blog-post"
+              required
+            />
+            <small>URL-friendly version (e.g., "my-awesome-post")</small>
+          </div>
+
+          <div class="form-group">
+            <label for="blog-excerpt">Excerpt *</label>
+            <textarea
+              id="blog-excerpt"
+              class="form-control"
+              rows="2"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="blog-content">Content *</label>
+            <textarea
+              id="blog-content"
+              class="form-control"
+              rows="10"
+              required
+            ></textarea>
+            <small>You can use HTML tags for formatting</small>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="blog-category">Category *</label>
+              <select id="blog-category" class="form-control" required>
+                <option value="">Select category</option>
+                <option value="memes">Memes</option>
+                <option value="analysis">Analysis</option>
+                <option value="behind-scenes">Behind Scenes</option>
+                <option value="updates">Updates</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="blog-featured-image">Featured Image URL *</label>
+              <input
+                type="text"
+                id="blog-featured-image"
+                class="form-control"
+                placeholder="images/blog-image.jpg"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="blog-tags">Tags (comma separated)</label>
+            <input
+              type="text"
+              id="blog-tags"
+              class="form-control"
+              placeholder="bigg boss, telugu, memes"
+            />
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="cancel-blog">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- JavaScript -->
+    <script src="js/config.js"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>

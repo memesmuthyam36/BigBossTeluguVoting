@@ -89,6 +89,12 @@ class BlogPage {
       });
 
       const response = await fetch(`${this.baseURL}/blog/posts?${params}`);
+
+      // Check if response is ok
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
 
       if (data.success) {
@@ -104,7 +110,8 @@ class BlogPage {
       }
     } catch (error) {
       console.error("Error loading blog posts:", error);
-      this.showNoPosts();
+      // Show error message instead of just "No posts"
+      this.showError(error.message);
     } finally {
       this.hideLoading();
     }
@@ -132,11 +139,17 @@ class BlogPage {
 
   // Create individual post card HTML
   createPostCard(post) {
-    const publishDate = new Date(post.publishDate).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
+    const publishDate =
+      post.publishedAt || post.publishDate
+        ? new Date(post.publishedAt || post.publishDate).toLocaleDateString(
+            "en-US",
+            {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            }
+          )
+        : "Invalid Date";
 
     return `
       <article class="blog-card" data-post-id="${post._id}">
@@ -332,6 +345,30 @@ class BlogPage {
     if (pagination) pagination.style.display = "none";
   }
 
+  // Show error message
+  showError(errorMessage) {
+    const loading = document.getElementById("blog-loading");
+    const grid = document.getElementById("blog-posts-grid");
+    const noPosts = document.getElementById("no-posts-message");
+    const pagination = document.getElementById("blog-pagination");
+
+    if (loading) loading.style.display = "none";
+    if (grid) grid.style.display = "none";
+    if (pagination) pagination.style.display = "none";
+
+    if (noPosts) {
+      noPosts.style.display = "block";
+      noPosts.innerHTML = `
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>Unable to Load Posts</h3>
+        <p>${
+          errorMessage || "Please check if the server is running and try again."
+        }</p>
+        <p><small>Make sure your backend server is running on port 3000</small></p>
+      `;
+    }
+  }
+
   // Utility functions
   capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -391,24 +428,33 @@ class BlogPostPage {
       const response = await fetch(
         `${this.baseURL}/blog/post/${this.postSlug}`
       );
+
+      if (!response.ok) {
+        console.log("API not available, using static content");
+        return; // Use static content from HTML
+      }
+
       const data = await response.json();
 
-      if (data.success && data.data) {
-        this.renderBlogPost(data.data);
+      if (data.success && data.data && data.data.post) {
+        this.renderBlogPost(data.data.post);
         this.trackPageView();
       } else {
-        this.showPostNotFound();
+        console.log("No API data available, using static content");
+        // Don't show error, just use static content
       }
     } catch (error) {
-      console.error("Error loading blog post:", error);
-      this.showPostNotFound();
+      console.log("API error, using static content:", error.message);
+      // Don't show error, just use static content
     }
   }
 
   // Render the blog post
   renderBlogPost(post) {
     // Update page title and meta
-    document.title = `${post.title} - Memes Muthyam`;
+    if (post.title) {
+      document.title = `${post.title} - Memes Muthyam`;
+    }
 
     // Update meta description
     const metaDesc = document.querySelector('meta[name="description"]');
@@ -421,7 +467,9 @@ class BlogPostPage {
 
     // Render post content
     this.renderPostContent(post);
-    this.renderRelatedPosts(post.tags);
+    if (post.tags) {
+      this.renderRelatedPosts(post.tags);
+    }
   }
 
   // Update Open Graph meta tags
@@ -433,19 +481,27 @@ class BlogPostPage {
     const ogImage = document.querySelector('meta[property="og:image"]');
     const ogUrl = document.querySelector('meta[property="og:url"]');
 
-    if (ogTitle) ogTitle.setAttribute("content", post.title);
-    if (ogDescription) ogDescription.setAttribute("content", post.excerpt);
-    if (ogImage) ogImage.setAttribute("content", post.featuredImage);
+    if (ogTitle && post.title) ogTitle.setAttribute("content", post.title);
+    if (ogDescription && post.excerpt)
+      ogDescription.setAttribute("content", post.excerpt);
+    if (ogImage && post.featuredImage)
+      ogImage.setAttribute("content", post.featuredImage);
     if (ogUrl) ogUrl.setAttribute("content", window.location.href);
   }
 
   // Render post content
   renderPostContent(post) {
-    const publishDate = new Date(post.publishDate).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    const publishDate =
+      post.publishedAt || post.publishDate
+        ? new Date(post.publishedAt || post.publishDate).toLocaleDateString(
+            "en-US",
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            }
+          )
+        : "Invalid Date";
 
     // You would need to update the HTML structure of the blog post page
     // This is a basic example of how you might update elements
@@ -453,8 +509,8 @@ class BlogPostPage {
     const contentEl = document.querySelector(".blog-post-body, .post-content");
     const metaEl = document.querySelector(".blog-post-info, .post-meta");
 
-    if (titleEl) titleEl.textContent = post.title;
-    if (contentEl) contentEl.innerHTML = post.content;
+    if (titleEl && post.title) titleEl.textContent = post.title;
+    if (contentEl && post.content) contentEl.innerHTML = post.content;
     if (metaEl) {
       metaEl.innerHTML = `
         <div class="post-date">

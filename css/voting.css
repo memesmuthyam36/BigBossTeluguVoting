@@ -10,6 +10,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 80px;
+}
+
+@media (max-width: 768px) {
+  .voting-hero {
+    margin-top: 0;
+    padding-top: 3rem;
+  }
 }
 
 .voting-title {
@@ -325,20 +333,35 @@
   animation: fadeIn 0.3s ease;
 }
 
+/* Ensure modal is always centered */
 .modal.show {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 .modal-content {
   background: white;
   border-radius: 15px;
   max-width: 500px;
-  width: 90%;
+  width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   animation: slideIn 0.3s ease;
+  margin: auto;
+  position: relative;
+  transform: translateY(0);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-header {
@@ -467,22 +490,86 @@
 }
 
 /* Responsive Design */
+@media (max-width: 968px) {
+  .contestants-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
+  .voting-hero {
+    padding: 3rem 0 2rem;
+    min-height: auto;
+  }
+
   .voting-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+
+  .voting-subtitle {
+    font-size: 1rem;
   }
 
   .voting-stats {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
   .stat-card {
-    min-width: 200px;
+    min-width: 120px;
+    width: auto;
+    flex: 1;
+    max-width: 150px;
+    padding: 1rem 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.8rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .voting-section {
+    padding: 3rem 0;
+  }
+
+  .voting-info h2 {
+    font-size: 2rem;
   }
 
   .contestants-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .contestant-image {
+    height: 200px;
+  }
+
+  .contestant-card {
+    margin: 0 auto;
+    max-width: 400px;
+  }
+
+  .contestant-info {
+    padding: 1rem;
+  }
+
+  .contestant-name {
+    font-size: 1.2rem;
+  }
+
+  .contestant-description {
+    font-size: 0.9rem;
+  }
+
+  .voting-share {
+    padding: 2rem 1.5rem;
   }
 
   .social-share-buttons {
@@ -492,13 +579,27 @@
 
   .share-btn {
     width: 100%;
-    max-width: 250px;
+    max-width: 300px;
     justify-content: center;
   }
 
   .modal-content {
     width: 95%;
-    margin: 1rem;
+    margin: 1rem auto;
+    max-width: 400px;
+  }
+
+  .modal.show {
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
   }
 
   .contestant-preview {
@@ -509,6 +610,10 @@
   .modal-actions {
     flex-direction: column;
   }
+
+  .modal-actions .btn {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -516,21 +621,65 @@
     padding: 2rem 0;
   }
 
+  .modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 5px;
+  }
+
+  .modal-content {
+    width: 95%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
   .voting-title {
     font-size: 1.8rem;
   }
 
   .voting-subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    padding: 0 1rem;
+  }
+
+  .voting-stats {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .stat-card {
-    padding: 1rem;
-    min-width: 150px;
+    padding: 0.8rem;
+    min-width: 100px;
+    max-width: 200px;
   }
 
   .stat-number {
-    font-size: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .voting-section {
+    padding: 2rem 0;
+  }
+
+  .voting-info h2 {
+    font-size: 1.8rem;
+  }
+
+  .voting-info p {
+    font-size: 0.9rem;
+    padding: 0 1rem;
   }
 
   .voting-share {

@@ -483,7 +483,7 @@ class BiggBossBlog {
 
   // Preload critical resources
   preloadCriticalResources() {
-    const criticalImages = ["images/hero-bigg-boss.jpg", "images/logo.png"];
+    const criticalImages = ["images/banner.png", "images/logo.png"];
 
     criticalImages.forEach((src) => {
       const link = document.createElement("link");

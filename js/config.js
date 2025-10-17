@@ -5,15 +5,28 @@
 
 const CONFIG = {
   // API Configuration
-  API_URL: "https://big-boss-telugu-voting-server.vercel.app",
-  API_BASE_URL: "https://big-boss-telugu-voting-server.vercel.app/api",
+  API_URL:
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+      ? "http://localhost:3000"
+      : "https://big-boss-telugu-voting-server.vercel.app",
+
+  API_BASE_URL:
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+      ? "http://localhost:3000/api"
+      : "https://big-boss-telugu-voting-server.vercel.app/api",
 
   // For production, update these values:
   // API_URL: 'https://your-backend-domain.com',
   // API_BASE_URL: 'https://your-backend-domain.com/api',
 
   // Environment
-  ENV: "development", // 'development' or 'production'
+  ENV:
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+      ? "development"
+      : "production",
 
   // Feature flags
   ENABLE_SOCKET: true,
@@ -42,6 +55,8 @@ const CONFIG = {
 // Make config available globally
 if (typeof window !== "undefined") {
   window.APP_CONFIG = CONFIG;
+  // Also make API_BASE_URL available globally for backward compatibility
+  window.API_BASE_URL = CONFIG.API_BASE_URL;
 }
 
 // Export for module systems
