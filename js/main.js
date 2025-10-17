@@ -243,6 +243,9 @@ class BiggBossBlog {
       } else {
         console.log("📊 No voting stats found");
       }
+
+      // Initialize voting schedule display
+      this.initializeVotingSchedule();
     } catch (error) {
       console.error("❌ Error loading voting stats:", error);
       // Set fallback values
@@ -252,6 +255,119 @@ class BiggBossBlog {
       );
       if (totalVotesEl) totalVotesEl.textContent = "---";
       if (totalContestantsEl) totalContestantsEl.textContent = "---";
+    }
+  }
+
+  // Initialize voting schedule display on homepage
+  initializeVotingSchedule() {
+    const scheduleEl = document.getElementById("home-voting-schedule");
+    if (!scheduleEl) return;
+
+    // Voting schedule configuration
+    this.votingSchedule = {
+      openDay: 1, // Monday
+      openHour: 20, // 8 PM
+      closeDay: 5, // Friday
+    };
+
+    this.updateHomeVotingSchedule();
+    // Update every second
+    setInterval(() => this.updateHomeVotingSchedule(), 1000);
+  }
+
+  // Check if voting is currently open
+  isVotingOpen() {
+    const now = new Date();
+    const currentDay = now.getDay();
+    const currentHour = now.getHours();
+
+    if (currentDay < this.votingSchedule.openDay) {
+      return false;
+    } else if (currentDay === this.votingSchedule.openDay) {
+      return currentHour >= this.votingSchedule.openHour;
+    } else if (
+      currentDay > this.votingSchedule.openDay &&
+      currentDay < this.votingSchedule.closeDay
+    ) {
+      return true;
+    } else if (currentDay === this.votingSchedule.closeDay) {
+      return currentHour < 24;
+    } else {
+      return false;
+    }
+  }
+
+  // Get next voting time
+  getNextVotingTime() {
+    const now = new Date();
+    const currentDay = now.getDay();
+    const isOpen = this.isVotingOpen();
+
+    let targetDate = new Date(now);
+
+    if (isOpen) {
+      const daysUntilFriday =
+        (this.votingSchedule.closeDay - currentDay + 7) % 7;
+      targetDate.setDate(
+        now.getDate() + (daysUntilFriday === 0 ? 7 : daysUntilFriday)
+      );
+      targetDate.setHours(23, 59, 59, 999);
+    } else {
+      let daysUntilMonday = (this.votingSchedule.openDay - currentDay + 7) % 7;
+      if (daysUntilMonday === 0 && currentDay === this.votingSchedule.openDay) {
+        if (now.getHours() < this.votingSchedule.openHour) {
+          daysUntilMonday = 0;
+        } else {
+          daysUntilMonday = 7;
+        }
+      }
+      if (daysUntilMonday === 0 && currentDay !== this.votingSchedule.openDay) {
+        daysUntilMonday = 7;
+      }
+      targetDate.setDate(now.getDate() + daysUntilMonday);
+      targetDate.setHours(this.votingSchedule.openHour, 0, 0, 0);
+    }
+
+    return targetDate;
+  }
+
+  // Format countdown
+  formatCountdown(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const days = Math.floor(totalSeconds / (24 * 60 * 60));
+    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = totalSeconds % 60;
+
+    return { days, hours, minutes, seconds };
+  }
+
+  // Update home voting schedule display
+  updateHomeVotingSchedule() {
+    const scheduleEl = document.getElementById("home-voting-schedule");
+    if (!scheduleEl) return;
+
+    const isOpen = this.isVotingOpen();
+    const nextTime = this.getNextVotingTime();
+    const now = new Date();
+    const timeRemaining = nextTime - now;
+    const countdown = this.formatCountdown(timeRemaining);
+
+    const icon = scheduleEl.querySelector("i");
+    const span = scheduleEl.querySelector("span");
+
+    if (isOpen) {
+      scheduleEl.className = "voting-schedule-info voting-open";
+      if (icon) icon.className = "fas fa-check-circle";
+      if (span) {
+        span.innerHTML = `<strong>Voting is OPEN!</strong> Closes in ${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s`;
+      }
+    } else {
+      scheduleEl.className = "voting-schedule-info voting-closed";
+      if (icon) icon.className = "fas fa-lock";
+      if (span) {
+        span.innerHTML = `<strong>Voting is CLOSED</strong> - Opens in ${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s<br><small>Voting: Monday 8 PM - Friday 11:59 PM</small>`;
+      }
     }
   }
 

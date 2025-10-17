@@ -11,15 +11,159 @@ class VotingSystem {
     this.socketURL = config.API_URL;
     this.contestants = [];
     this.votingStatus = {
-      dailyVoteCount: 0,
-      remainingVotes: 3,
-      votedContestants: [],
+      hasVotedInSession: false,
+      votedContestantId: null,
+      votedContestantName: null,
     };
     this.socket = null;
+    this.votingSchedule = {
+      openDay: 1, // Monday (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+      openHour: 20, // 8 PM (20:00)
+      closeDay: 5, // Friday
+      closeHour: 23, // 11 PM (23:00)
+      closeDayEnd: 5, // Friday
+      closeHourEnd: 59, // 11:59 PM
+      closeMinuteEnd: 59,
+    };
+    this.countdownInterval = null;
     this.initializeSocket();
     this.initializeEventListeners();
     this.loadContestants();
     this.loadVotingStatus();
+    this.startCountdownTimer();
+  }
+
+  // Check if voting is currently open
+  isVotingOpen() {
+    const now = new Date();
+    const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    const currentHour = now.getHours();
+
+    // Voting is open from Monday 8 PM to Friday 11:59 PM
+    // Monday = 1, Friday = 5
+
+    if (currentDay < this.votingSchedule.openDay) {
+      // Before Monday
+      return false;
+    } else if (currentDay === this.votingSchedule.openDay) {
+      // Monday - check if it's after 8 PM
+      return currentHour >= this.votingSchedule.openHour;
+    } else if (
+      currentDay > this.votingSchedule.openDay &&
+      currentDay < this.votingSchedule.closeDay
+    ) {
+      // Tuesday, Wednesday, Thursday - voting is open
+      return true;
+    } else if (currentDay === this.votingSchedule.closeDay) {
+      // Friday - check if it's before 11:59 PM
+      return currentHour < 24;
+    } else {
+      // Saturday or Sunday
+      return false;
+    }
+  }
+
+  // Get next voting open/close time
+  getNextVotingTime() {
+    const now = new Date();
+    const currentDay = now.getDay();
+    const isOpen = this.isVotingOpen();
+
+    let targetDate = new Date(now);
+
+    if (isOpen) {
+      // Find next Friday 11:59 PM
+      const daysUntilFriday =
+        (this.votingSchedule.closeDay - currentDay + 7) % 7;
+      targetDate.setDate(
+        now.getDate() + (daysUntilFriday === 0 ? 7 : daysUntilFriday)
+      );
+      targetDate.setHours(23, 59, 59, 999);
+    } else {
+      // Find next Monday 8 PM
+      let daysUntilMonday = (this.votingSchedule.openDay - currentDay + 7) % 7;
+      if (daysUntilMonday === 0 && currentDay === this.votingSchedule.openDay) {
+        // It's Monday but before 8 PM
+        if (now.getHours() < this.votingSchedule.openHour) {
+          daysUntilMonday = 0;
+        } else {
+          daysUntilMonday = 7;
+        }
+      }
+      if (daysUntilMonday === 0 && currentDay !== this.votingSchedule.openDay) {
+        daysUntilMonday = 7;
+      }
+      targetDate.setDate(now.getDate() + daysUntilMonday);
+      targetDate.setHours(this.votingSchedule.openHour, 0, 0, 0);
+    }
+
+    return targetDate;
+  }
+
+  // Format countdown time
+  formatCountdown(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const days = Math.floor(totalSeconds / (24 * 60 * 60));
+    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
+    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    const seconds = totalSeconds % 60;
+
+    return { days, hours, minutes, seconds };
+  }
+
+  // Start countdown timer
+  startCountdownTimer() {
+    this.updateCountdown();
+    this.countdownInterval = setInterval(() => {
+      this.updateCountdown();
+    }, 1000);
+  }
+
+  // Update countdown display
+  updateCountdown() {
+    const isOpen = this.isVotingOpen();
+    const nextTime = this.getNextVotingTime();
+    const now = new Date();
+    const timeRemaining = nextTime - now;
+
+    const countdown = this.formatCountdown(timeRemaining);
+
+    // Update voting status section
+    this.updateVotingScheduleStatus(isOpen, countdown);
+  }
+
+  // Update voting schedule status in UI
+  updateVotingScheduleStatus(isOpen, countdown) {
+    const statusElement = document.getElementById("voting-status");
+    if (!statusElement) return;
+
+    const statusIcon = statusElement.querySelector("i");
+    const statusSpan = statusElement.querySelector("span");
+
+    if (isOpen) {
+      statusElement.className = "voting-status voting-open";
+      if (statusIcon) statusIcon.className = "fas fa-check-circle";
+      if (statusSpan) {
+        statusSpan.innerHTML = `
+          <strong>Voting is OPEN!</strong><br/>
+          Voting closes in: <span class="countdown-timer">
+            ${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s
+          </span>
+        `;
+      }
+    } else {
+      statusElement.className = "voting-status voting-closed";
+      if (statusIcon) statusIcon.className = "fas fa-clock";
+      if (statusSpan) {
+        statusSpan.innerHTML = `
+          <strong>Voting is CLOSED</strong><br/>
+          Voting opens in: <span class="countdown-timer">
+            ${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s
+          </span><br/>
+          <small>Voting is open from Monday 8:00 PM to Friday 11:59 PM</small>
+        `;
+      }
+    }
   }
 
   // Initialize Socket.IO connection for real-time updates
@@ -96,27 +240,40 @@ class VotingSystem {
     }
   }
 
-  // Load current voting status for the user
-  async loadVotingStatus() {
+  // Load current voting status from session storage
+  loadVotingStatus() {
     try {
-      console.log(
-        "📊 Loading voting status from:",
-        `${this.baseURL}/voting/status`
-      );
-      const response = await fetch(`${this.baseURL}/voting/status`);
-      const data = await response.json();
+      // Check session storage for voting status
+      const sessionVoteData = sessionStorage.getItem("votingSession");
+      if (sessionVoteData) {
+        const voteData = JSON.parse(sessionVoteData);
+        this.votingStatus = {
+          hasVotedInSession: true,
+          votedContestantId: voteData.contestantId,
+          votedContestantName: voteData.contestantName,
+        };
+        console.log("📊 Loaded voting status from session:", this.votingStatus);
+      } else {
+        this.votingStatus = {
+          hasVotedInSession: false,
+          votedContestantId: null,
+          votedContestantName: null,
+        };
+        console.log("📊 No previous votes in this session");
+      }
 
-      if (data.success) {
-        this.votingStatus = data.data;
-        this.updateVotingStatus();
-        // Update the "Your Votes" count in the hero section
-        const userVotesElement = document.getElementById("your-votes");
-        if (userVotesElement) {
-          userVotesElement.textContent = this.votingStatus.dailyVoteCount || 0;
-          console.log(
-            `✅ Updated your votes: ${this.votingStatus.dailyVoteCount || 0}`
-          );
-        }
+      this.updateVotingStatus();
+      // Update the "Your Votes" count in the hero section
+      const userVotesElement = document.getElementById("your-votes");
+      if (userVotesElement) {
+        userVotesElement.textContent = this.votingStatus.hasVotedInSession
+          ? "1"
+          : "0";
+        console.log(
+          `✅ Updated your votes: ${
+            this.votingStatus.hasVotedInSession ? "1" : "0"
+          }`
+        );
       }
     } catch (error) {
       console.error("Error loading voting status:", error);
@@ -131,9 +288,9 @@ class VotingSystem {
     grid.innerHTML = "";
 
     this.contestants.forEach((contestant, index) => {
-      const hasVoted = this.votingStatus.votedContestants.some(
-        (voted) => voted.contestantId === contestant._id
-      );
+      const hasVoted =
+        this.votingStatus.hasVotedInSession &&
+        this.votingStatus.votedContestantId === contestant._id;
 
       const contestantCard = this.createContestantCard(contestant, hasVoted);
       grid.appendChild(contestantCard);
@@ -146,8 +303,22 @@ class VotingSystem {
   // Create contestant card element
   createContestantCard(contestant, hasVoted = false) {
     const card = document.createElement("div");
-    card.className = `contestant-card ${hasVoted ? "voted" : ""}`;
+    const isVotingOpen = this.isVotingOpen();
+    card.className = `contestant-card ${hasVoted ? "voted" : ""} ${
+      !isVotingOpen ? "voting-closed" : ""
+    }`;
     card.setAttribute("data-contestant", contestant._id);
+
+    const isDisabled =
+      hasVoted || this.votingStatus.hasVotedInSession || !isVotingOpen;
+    let buttonText = "Vote";
+    if (hasVoted) {
+      buttonText = "Voted";
+    } else if (this.votingStatus.hasVotedInSession) {
+      buttonText = "Already Voted";
+    } else if (!isVotingOpen) {
+      buttonText = "Voting Closed";
+    }
 
     card.innerHTML = `
       <div class="contestant-image">
@@ -156,10 +327,10 @@ class VotingSystem {
     }" class="contestant-img" />
         <div class="contestant-overlay">
           <button class="vote-btn" data-contestant="${contestant._id}" ${
-      hasVoted || this.votingStatus.remainingVotes <= 0 ? "disabled" : ""
+      isDisabled ? "disabled" : ""
     }>
-            <i class="fas fa-vote-yea"></i>
-            ${hasVoted ? "Voted" : "Vote"}
+            <i class="fas ${!isVotingOpen ? "fa-lock" : "fa-vote-yea"}"></i>
+            ${buttonText}
           </button>
         </div>
       </div>
@@ -189,7 +360,7 @@ class VotingSystem {
     const voteBtn = card.querySelector(".vote-btn");
     voteBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      if (!hasVoted && this.votingStatus.remainingVotes > 0) {
+      if (!isDisabled) {
         this.handleVoteClick(contestant._id, contestant);
       }
     });
@@ -199,8 +370,22 @@ class VotingSystem {
 
   // Handle vote button click
   async handleVoteClick(contestantId, contestantData) {
-    if (this.votingStatus.remainingVotes <= 0) {
-      this.showMessage("You have reached your daily vote limit", "error");
+    // Check if voting is open
+    if (!this.isVotingOpen()) {
+      const nextTime = this.getNextVotingTime();
+      const countdown = this.formatCountdown(nextTime - new Date());
+      this.showMessage(
+        `Voting is currently closed. Voting opens in ${countdown.days}d ${countdown.hours}h ${countdown.minutes}m. Voting is open from Monday 8:00 PM to Friday 11:59 PM.`,
+        "error"
+      );
+      return;
+    }
+
+    if (this.votingStatus.hasVotedInSession) {
+      this.showMessage(
+        "You have already voted in this session. Close and reopen the page to vote again.",
+        "error"
+      );
       return;
     }
 
@@ -223,7 +408,8 @@ class VotingSystem {
     // Store contestant data for confirmation
     modal.dataset.contestantId = contestant._id;
 
-    modal.style.display = "block";
+    modal.style.display = "flex";
+    modal.classList.add("show");
     document.body.style.overflow = "hidden";
   }
 
@@ -243,12 +429,20 @@ class VotingSystem {
       if (data.success) {
         this.closeModal();
         this.showSuccessToast();
-        // Update local state
-        this.votingStatus.remainingVotes = data.data.remainingVotes;
-        this.votingStatus.votedContestants.push({
+
+        // Save vote to session storage
+        const voteData = {
           contestantId: contestantId,
-          voteTime: new Date(),
-        });
+          contestantName: data.data.contestantName || "Contestant",
+          voteTime: new Date().toISOString(),
+        };
+        sessionStorage.setItem("votingSession", JSON.stringify(voteData));
+
+        // Update local state
+        this.votingStatus.hasVotedInSession = true;
+        this.votingStatus.votedContestantId = contestantId;
+        this.votingStatus.votedContestantName = voteData.contestantName;
+
         this.updateVotingStatus();
         this.loadContestants(); // Refresh data
       } else {
@@ -322,7 +516,9 @@ class VotingSystem {
     // Update user votes
     const userVotesElement = document.getElementById("your-votes");
     if (userVotesElement) {
-      userVotesElement.textContent = this.votingStatus.dailyVoteCount;
+      userVotesElement.textContent = this.votingStatus.hasVotedInSession
+        ? "1"
+        : "0";
     }
   }
 
@@ -332,12 +528,14 @@ class VotingSystem {
     if (!statusElement) return;
 
     const statusSpan = statusElement.querySelector("span");
-    if (this.votingStatus.remainingVotes <= 0) {
+    if (this.votingStatus.hasVotedInSession) {
       statusElement.className = "voting-status voted-limit";
-      statusSpan.textContent = "You have reached your daily vote limit";
+      statusSpan.textContent = `You have voted for ${
+        this.votingStatus.votedContestantName || "a contestant"
+      } in this session. Close and reopen the page to vote again.`;
     } else {
       statusElement.className = "voting-status";
-      statusSpan.textContent = `You can vote for ${this.votingStatus.remainingVotes} more contestants today`;
+      statusSpan.textContent = `You can vote for 1 contestant in this session`;
     }
   }
 
@@ -346,6 +544,7 @@ class VotingSystem {
     const modal = document.getElementById("vote-modal");
     if (modal) {
       modal.style.display = "none";
+      modal.classList.remove("show");
       document.body.style.overflow = "auto";
     }
   }
@@ -416,10 +615,11 @@ class VotingSystem {
       rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : rank;
 
     // Check if user has already voted for this contestant
-    const hasVoted = this.votingStatus.votedContestants.some(
-      (voted) => voted.contestantId === contestant._id
-    );
-    const canVote = !hasVoted && this.votingStatus.remainingVotes > 0;
+    const hasVoted =
+      this.votingStatus.hasVotedInSession &&
+      this.votingStatus.votedContestantId === contestant._id;
+    const isVotingOpen = this.isVotingOpen();
+    const canVote = !this.votingStatus.hasVotedInSession && isVotingOpen;
 
     resultItem.innerHTML = `
       <div class="result-rank ${rankClass}">${rankIcon}</div>
@@ -452,6 +652,8 @@ class VotingSystem {
           </button>`
               : hasVoted
               ? `<span class="voted-indicator"><i class="fas fa-check"></i> Voted</span>`
+              : !isVotingOpen
+              ? `<span class="voting-closed-indicator"><i class="fas fa-lock"></i> Closed</span>`
               : ""
           }
         </div>

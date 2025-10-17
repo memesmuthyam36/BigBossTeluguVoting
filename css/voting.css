@@ -90,17 +90,127 @@
 
 .voting-status {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
   background: #e8f5e8;
   color: #2d5a2d;
-  padding: 0.75rem 1.5rem;
-  border-radius: 25px;
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
   font-weight: 500;
+  text-align: left;
+  max-width: 600px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .voting-status i {
   color: #4caf50;
+  font-size: 1.5rem;
+  margin-top: 0.2rem;
+}
+
+/* Voting Open Status */
+.voting-status.voting-open {
+  background: linear-gradient(135deg, #e8f5e8 0%, #d4f1d4 100%);
+  border: 2px solid #4caf50;
+}
+
+.voting-status.voting-open i {
+  color: #2e7d32;
+  animation: pulse 2s infinite;
+}
+
+/* Voting Closed Status */
+.voting-status.voting-closed {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border: 2px solid #f44336;
+  color: #c62828;
+}
+
+.voting-status.voting-closed i {
+  color: #d32f2f;
+}
+
+/* Countdown Timer Styling */
+.countdown-timer {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.1em;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  margin: 0.25rem 0;
+  font-family: "Courier New", monospace;
+  letter-spacing: 0.5px;
+}
+
+.voting-status.voting-open .countdown-timer {
+  color: #2e7d32;
+}
+
+.voting-status.voting-closed .countdown-timer {
+  color: #c62828;
+}
+
+.voting-status strong {
+  font-size: 1.1em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.voting-status small {
+  display: block;
+  margin-top: 0.5rem;
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+/* Pulse Animation for Voting Open */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Voting Closed Indicator */
+.voting-closed-indicator {
+  color: #f44336;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.voting-closed-indicator i {
+  color: #f44336;
+}
+
+/* Contestant Card Closed State */
+.contestant-card.voting-closed {
+  opacity: 0.7;
+  position: relative;
+}
+
+.contestant-card.voting-closed::after {
+  content: "🔒 Voting Closed";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(244, 67, 54, 0.9);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 10;
 }
 
 /* Contestants Grid */
@@ -788,6 +898,45 @@
   display: flex;
   gap: 1rem;
   justify-content: center;
+}
+
+.modal-actions .btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.modal-actions .btn-primary {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  color: white;
+}
+
+.modal-actions .btn-primary:hover {
+  background: linear-gradient(45deg, #ff5252, #ff7979);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.modal-actions .btn-secondary {
+  background: #f8f9fa;
+  color: #6c757d;
+  border: 2px solid #dee2e6;
+}
+
+.modal-actions .btn-secondary:hover {
+  background: #e9ecef;
+  color: #495057;
+  border-color: #adb5bd;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(108, 117, 125, 0.2);
 }
 
 /* Toast Notification */
