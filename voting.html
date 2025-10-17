@@ -72,6 +72,9 @@
                 <a href="voting.html" class="nav-link active">Vote</a>
               </li>
               <li class="nav-item">
+                <a href="blog.html" class="nav-link">Blog</a>
+              </li>
+              <li class="nav-item">
                 <a href="about.html" class="nav-link">About</a>
               </li>
               <li class="nav-item">
@@ -100,15 +103,15 @@
           </p>
           <div class="voting-stats">
             <div class="stat-card">
-              <div class="stat-number" id="total-votes">15,432</div>
+              <div class="stat-number" id="total-votes">Loading...</div>
               <div class="stat-label">Total Votes</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number">8</div>
+              <div class="stat-number" id="total-contestants">Loading...</div>
               <div class="stat-label">Contestants</div>
             </div>
             <div class="stat-card">
-              <div class="stat-number" id="your-votes">0</div>
+              <div class="stat-number" id="your-votes">Loading...</div>
               <div class="stat-label">Your Votes</div>
             </div>
           </div>
@@ -340,6 +343,55 @@
             </div>
           </div>
         </div>
+
+        <!-- Vote Results Bar Graph Section -->
+        <section class="vote-results-section" id="vote-results-section">
+          <div class="container">
+            <div class="results-header">
+              <h2 class="results-title">
+                <i class="fas fa-chart-bar"></i>
+                Live Vote Results
+              </h2>
+              <p class="results-subtitle">
+                See how your favorite contestants are performing in real-time
+              </p>
+            </div>
+
+            <div class="results-container">
+              <div class="results-list" id="results-list">
+                <!-- Results will be dynamically populated here -->
+                <div class="loading-results">
+                  <i class="fas fa-spinner fa-spin"></i>
+                  <span>Loading vote results...</span>
+                </div>
+              </div>
+
+              <div class="results-summary">
+                <div class="summary-stats">
+                  <div class="summary-item">
+                    <i class="fas fa-users"></i>
+                    <span class="summary-label">Total Votes</span>
+                    <span class="summary-value" id="results-total-votes"
+                      >0</span
+                    >
+                  </div>
+                  <div class="summary-item">
+                    <i class="fas fa-trophy"></i>
+                    <span class="summary-label">Leading</span>
+                    <span class="summary-value" id="results-leader">-</span>
+                  </div>
+                  <div class="summary-item">
+                    <i class="fas fa-clock"></i>
+                    <span class="summary-label">Last Updated</span>
+                    <span class="summary-value" id="results-last-updated"
+                      >-</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <!-- Social Sharing -->
         <div class="voting-share">

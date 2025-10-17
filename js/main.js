@@ -1,7 +1,14 @@
 // Main JavaScript file for Memes Muthyam with Real-time Features
 class BiggBossBlog {
   constructor() {
-    this.baseURL = "http://localhost:3000/api";
+    // Use configuration from config.js if available
+    const config = window.APP_CONFIG || {
+      API_BASE_URL: "http://localhost:3000/api",
+      API_URL: "http://localhost:3000",
+    };
+
+    this.baseURL = config.API_BASE_URL;
+    this.socketURL = config.API_URL;
     this.socket = null;
     this.initializeSocket();
     this.initializeNavigation();
@@ -46,8 +53,11 @@ class BiggBossBlog {
     // Load Socket.IO client library if not already loaded
     if (typeof io === "undefined") {
       const script = document.createElement("script");
-      script.src = "/socket.io/socket.io.js";
+      script.src = `${this.socketURL}/socket.io/socket.io.js`;
       script.onload = () => this.connectSocket();
+      script.onerror = () => {
+        console.log("Socket.IO not available");
+      };
       document.head.appendChild(script);
     } else {
       this.connectSocket();
@@ -56,7 +66,8 @@ class BiggBossBlog {
 
   connectSocket() {
     try {
-      this.socket = io("http://localhost:3000");
+      console.log("🔌 Connecting to Socket.IO server:", this.socketURL);
+      this.socket = io(this.socketURL);
 
       this.socket.on("connect", () => {
         console.log("✅ Connected to blog server");
@@ -89,6 +100,7 @@ class BiggBossBlog {
   // Initialize blog-specific features
   initializeBlogFeatures() {
     this.loadBlogPosts();
+    this.loadVotingStats();
     this.initializeBlogShareButtons();
     this.initializeBlogViewTracking();
   }
@@ -96,64 +108,151 @@ class BiggBossBlog {
   // Load blog posts from API
   async loadBlogPosts() {
     try {
+      console.log(
+        "📝 Loading blog posts from:",
+        `${this.baseURL}/blog/posts?limit=6`
+      );
       const response = await fetch(`${this.baseURL}/blog/posts?limit=6`);
       const data = await response.json();
+      console.log("📝 Blog API response:", data);
 
       if (data.success && data.data.posts) {
+        console.log(
+          "📝 Updating blog section with",
+          data.data.posts.length,
+          "posts"
+        );
         this.updateBlogSection(data.data.posts);
+      } else {
+        console.log("📝 No blog posts found or API error");
       }
     } catch (error) {
-      console.error("Error loading blog posts:", error);
+      console.error("❌ Error loading blog posts:", error);
     }
   }
 
   // Update blog section with real data
   updateBlogSection(posts) {
+    console.log("🔄 Updating blog section with posts:", posts);
     const blogGrid = document.querySelector(".blog-grid");
-    if (!blogGrid) return;
+    if (!blogGrid) {
+      console.log("❌ Blog grid not found");
+      return;
+    }
 
-    // Keep the existing structure but update content
-    const existingCards = blogGrid.querySelectorAll(".blog-card");
-    existingCards.forEach((card, index) => {
-      if (posts[index]) {
-        const post = posts[index];
+    // Clear existing static content
+    blogGrid.innerHTML = "";
+    console.log("🗑️ Cleared existing blog cards");
 
-        // Update image
-        const img = card.querySelector(".blog-img");
-        if (img) img.src = post.featuredImage;
+    // Generate new cards from API data
+    posts.forEach((post) => {
+      const publishDate = post.publishedAt
+        ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })
+        : "Recently";
 
-        // Update title
-        const title = card.querySelector(".blog-title");
-        if (title) {
-          title.textContent = post.title;
-          title.closest("a").href = `blog/${post.slug}.html`;
-        }
+      const categoryFormatted =
+        post.category.charAt(0).toUpperCase() + post.category.slice(1);
 
-        // Update excerpt
-        const excerpt = card.querySelector(".blog-excerpt");
-        if (excerpt) excerpt.textContent = post.excerpt;
+      const cardHTML = `
+        <article class="blog-card">
+          <div class="blog-img-container">
+            <img
+              src="${post.featuredImage}"
+              alt="${post.title}"
+              class="blog-img"
+            />
+            <div class="blog-category">${categoryFormatted}</div>
+          </div>
+          <div class="blog-content">
+            <h3 class="blog-title">
+              ${post.title}
+            </h3>
+            <p class="blog-excerpt">
+              ${post.excerpt}
+            </p>
+            <div class="blog-meta">
+              <span class="blog-date">
+                <i class="fas fa-calendar"></i>
+                ${publishDate}
+              </span>
+              <span class="blogs-views">
+                <i class="fas fa-eye"></i>
+                ${this.formatNumber(post.viewCount)} views
+              </span>
+            </div>
+            <div class="blog-actions">
+              <a href="blog/${
+                post.slug
+              }.html" class="btn btn-outline">Read More</a>
+              <div class="social-share">
+                <button
+                  class="share-btn"
+                  data-url="blog/${post.slug}.html"
+                  data-title="${post.title}"
+                >
+                  <i class="fas fa-share"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
 
-        // Update category
-        const category = card.querySelector(".blog-category");
-        if (category)
-          category.textContent =
-            post.category.charAt(0).toUpperCase() + post.category.slice(1);
-
-        // Update views
-        const views = card.querySelector(".blog-views");
-        if (views)
-          views.innerHTML = `<i class="fas fa-eye"></i> ${this.formatNumber(
-            post.viewCount
-          )} views`;
-
-        // Update share button data
-        const shareBtn = card.querySelector(".share-btn");
-        if (shareBtn) {
-          shareBtn.dataset.url = `blog/${post.slug}.html`;
-          shareBtn.dataset.title = post.title;
-        }
-      }
+      blogGrid.innerHTML += cardHTML;
     });
+
+    console.log(`✅ Generated ${posts.length} dynamic blog cards`);
+
+    // Reinitialize share buttons for new cards
+    this.initializeBlogShareButtons();
+  }
+
+  // Load voting statistics from API
+  async loadVotingStats() {
+    try {
+      console.log(
+        "🗳️ Loading voting stats from:",
+        `${this.baseURL}/voting/contestants`
+      );
+      const response = await fetch(`${this.baseURL}/voting/contestants`);
+      const data = await response.json();
+
+      if (data.success) {
+        const totalVotes = data.totalVotes || 0;
+        const totalContestants = data.totalContestants || 0;
+
+        // Update home page voting stats
+        const totalVotesEl = document.getElementById("home-total-votes");
+        const totalContestantsEl = document.getElementById(
+          "home-total-contestants"
+        );
+
+        if (totalVotesEl) {
+          totalVotesEl.textContent = this.formatNumber(totalVotes);
+          console.log(`✅ Updated total votes: ${totalVotes}`);
+        }
+
+        if (totalContestantsEl) {
+          totalContestantsEl.textContent = totalContestants;
+          console.log(`✅ Updated total contestants: ${totalContestants}`);
+        }
+      } else {
+        console.log("📊 No voting stats found");
+      }
+    } catch (error) {
+      console.error("❌ Error loading voting stats:", error);
+      // Set fallback values
+      const totalVotesEl = document.getElementById("home-total-votes");
+      const totalContestantsEl = document.getElementById(
+        "home-total-contestants"
+      );
+      if (totalVotesEl) totalVotesEl.textContent = "---";
+      if (totalContestantsEl) totalContestantsEl.textContent = "---";
+    }
   }
 
   // Initialize blog share buttons with API integration

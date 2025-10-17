@@ -1,7 +1,13 @@
 // Admin Panel JavaScript
 class AdminPanel {
   constructor() {
-    this.baseURL = API_BASE_URL || "http://localhost:3000/api";
+    // Use configuration from config.js if available, otherwise fallback to localhost
+    const config = window.APP_CONFIG || {
+      API_BASE_URL: "http://localhost:3000/api",
+      API_URL: "http://localhost:3000",
+    };
+
+    this.baseURL = config.API_BASE_URL;
     this.currentTab = "contestants";
     this.contestants = [];
     this.blogs = [];
@@ -116,6 +122,11 @@ class AdminPanel {
             <div class="contestant-item-votes">
               <i class="fas fa-heart"></i>
               <span>${this.formatNumber(contestant.votes)} votes</span>
+              <button class="btn btn-sm btn-outline" onclick="adminPanel.editVotes('${
+                contestant._id
+              }', '${contestant.name}', ${contestant.votes})">
+                <i class="fas fa-edit"></i> Edit Votes
+              </button>
             </div>
           </div>
         </div>
@@ -239,11 +250,11 @@ class AdminPanel {
   // Blog Management
   async loadBlogs() {
     try {
-      const response = await fetch(`${this.baseURL}/blog/posts?limit=100`);
+      const response = await fetch(`${this.baseURL}/admin/blog`);
       const data = await response.json();
 
       if (data.success) {
-        this.blogs = data.data.posts || [];
+        this.blogs = data.data || [];
         this.renderBlogs();
       }
     } catch (error) {
@@ -417,6 +428,58 @@ class AdminPanel {
     } catch (error) {
       console.error("Error deleting blog:", error);
       this.showToast("Failed to delete blog post", "error");
+    }
+  }
+
+  // Vote editing methods
+  editVotes(contestantId, contestantName, currentVotes) {
+    const newVotes = prompt(
+      `Enter new vote count for ${contestantName}:\n(Current votes: ${this.formatNumber(
+        currentVotes
+      )})`,
+      currentVotes
+    );
+
+    if (newVotes === null) return; // User cancelled
+
+    const votes = parseInt(newVotes);
+    if (isNaN(votes) || votes < 0) {
+      this.showToast("Please enter a valid non-negative number", "error");
+      return;
+    }
+
+    this.updateContestantVotes(contestantId, votes, contestantName);
+  }
+
+  async updateContestantVotes(contestantId, votes, contestantName) {
+    try {
+      this.showToast("Updating votes...", "info");
+
+      const response = await fetch(
+        `${this.baseURL}/admin/contestants/${contestantId}/votes`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ votes }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        this.showToast(
+          `Votes updated successfully for ${contestantName}`,
+          "success"
+        );
+        this.loadContestants(); // Refresh the list
+      } else {
+        this.showToast(data.message || "Failed to update votes", "error");
+      }
+    } catch (error) {
+      console.error("Error updating votes:", error);
+      this.showToast("Failed to update votes", "error");
     }
   }
 

@@ -86,6 +86,9 @@
                 <a href="voting.html" class="nav-link">Vote</a>
               </li>
               <li class="nav-item">
+                <a href="blog.html" class="nav-link">Blog</a>
+              </li>
+              <li class="nav-item">
                 <a href="about.html" class="nav-link">About</a>
               </li>
               <li class="nav-item">
@@ -147,138 +150,10 @@
       <div class="container">
         <h2 class="section-title">Latest Blog Posts</h2>
         <div class="blog-grid">
-          <!-- Blog Post 1 -->
-          <article class="blog-card">
-            <div class="blog-image">
-              <img
-                src="images/blog-post-1.jpg"
-                alt="Bigg Boss Meme"
-                class="blog-img"
-              />
-              <div class="blog-category">Memes</div>
-            </div>
-            <div class="blog-content">
-              <h3 class="blog-title">
-                Top 10 Funniest Bigg Boss Memes This Week
-              </h3>
-              <p class="blog-excerpt">
-                Check out the most hilarious memes that have been circulating
-                about our favorite contestants...
-              </p>
-              <div class="blog-meta">
-                <span class="blog-date">
-                  <i class="fas fa-calendar"></i>
-                  December 15, 2024
-                </span>
-                <span class="blog-views">
-                  <i class="fas fa-eye"></i>
-                  1.2k views
-                </span>
-              </div>
-              <div class="blog-actions">
-                <a href="blog/top-10-memes.html" class="btn btn-outline"
-                  >Read More</a
-                >
-                <div class="social-share">
-                  <button
-                    class="share-btn"
-                    data-url="blog/top-10-memes.html"
-                    data-title="Top 10 Funniest Bigg Boss Memes"
-                  >
-                    <i class="fas fa-share"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Blog Post 2 -->
-          <article class="blog-card">
-            <div class="blog-image">
-              <img
-                src="images/blog-post-2.jpg"
-                alt="Contestant Analysis"
-                class="blog-img"
-              />
-              <div class="blog-category">Analysis</div>
-            </div>
-            <div class="blog-content">
-              <h3 class="blog-title">Weekly Contestant Performance Analysis</h3>
-              <p class="blog-excerpt">
-                Who's winning hearts and who's causing drama? Our detailed
-                analysis of this week's performances...
-              </p>
-              <div class="blog-meta">
-                <span class="blog-date">
-                  <i class="fas fa-calendar"></i>
-                  December 14, 2024
-                </span>
-                <span class="blog-views">
-                  <i class="fas fa-eye"></i>
-                  856 views
-                </span>
-              </div>
-              <div class="blog-actions">
-                <a href="blog/weekly-analysis.html" class="btn btn-outline"
-                  >Read More</a
-                >
-                <div class="social-share">
-                  <button
-                    class="share-btn"
-                    data-url="blog/weekly-analysis.html"
-                    data-title="Weekly Contestant Performance Analysis"
-                  >
-                    <i class="fas fa-share"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Blog Post 3 -->
-          <article class="blog-card">
-            <div class="blog-image">
-              <img
-                src="images/blog-post-3.jpg"
-                alt="Behind the Scenes"
-                class="blog-img"
-              />
-              <div class="blog-category">Behind Scenes</div>
-            </div>
-            <div class="blog-content">
-              <h3 class="blog-title">
-                Behind the Scenes: What You Don't See on TV
-              </h3>
-              <p class="blog-excerpt">
-                Exclusive insights into the making of Bigg Boss Telugu and what
-                happens when cameras are off...
-              </p>
-              <div class="blog-meta">
-                <span class="blog-date">
-                  <i class="fas fa-calendar"></i>
-                  December 13, 2024
-                </span>
-                <span class="blog-views">
-                  <i class="fas fa-eye"></i>
-                  2.1k views
-                </span>
-              </div>
-              <div class="blog-actions">
-                <a href="blog/behind-scenes.html" class="btn btn-outline"
-                  >Read More</a
-                >
-                <div class="social-share">
-                  <button
-                    class="share-btn"
-                    data-url="blog/behind-scenes.html"
-                    data-title="Behind the Scenes: What You Don't See on TV"
-                  >
-                    <i class="fas fa-share"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </article>
+          <!-- Blog posts will be loaded dynamically from the API -->
+          <p style="text-align: center; color: #666; padding: 2rem">
+            Loading blog posts...
+          </p>
         </div>
 
         <div class="blog-pagination">
@@ -297,11 +172,13 @@
           </p>
           <div class="voting-stats">
             <div class="stat-item">
-              <span class="stat-number">15,432</span>
+              <span class="stat-number" id="home-total-votes">Loading...</span>
               <span class="stat-label">Total Votes</span>
             </div>
             <div class="stat-item">
-              <span class="stat-number">8</span>
+              <span class="stat-number" id="home-total-contestants"
+                >Loading...</span
+              >
               <span class="stat-label">Contestants</span>
             </div>
           </div>
@@ -375,8 +252,8 @@
       </div>
     </footer>
 
-    <!-- Socket.IO -->
-    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <!-- Configuration -->
+    <script src="js/config.js"></script>
 
     <!-- JavaScript -->
     <script src="js/main.js"></script>

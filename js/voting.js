@@ -109,6 +109,14 @@ class VotingSystem {
       if (data.success) {
         this.votingStatus = data.data;
         this.updateVotingStatus();
+        // Update the "Your Votes" count in the hero section
+        const userVotesElement = document.getElementById("your-votes");
+        if (userVotesElement) {
+          userVotesElement.textContent = this.votingStatus.dailyVoteCount || 0;
+          console.log(
+            `✅ Updated your votes: ${this.votingStatus.dailyVoteCount || 0}`
+          );
+        }
       }
     } catch (error) {
       console.error("Error loading voting status:", error);
@@ -130,6 +138,9 @@ class VotingSystem {
       const contestantCard = this.createContestantCard(contestant, hasVoted);
       grid.appendChild(contestantCard);
     });
+
+    // Render bar graph results
+    this.updateBarGraphResults();
   }
 
   // Create contestant card element
@@ -280,6 +291,9 @@ class VotingSystem {
     // Update total votes in hero section
     console.log(`📊 Updating hero stats with total votes: ${totalVotes}`);
     this.updateVoteStats(totalVotes);
+
+    // Update bar graph results
+    this.updateBarGraphResults();
   }
 
   // Update vote statistics in the hero section
@@ -296,9 +310,12 @@ class VotingSystem {
     }
 
     if (totalContestants !== null) {
-      const contestantsElement = document.querySelector(".stat-number");
+      const contestantsElement = document.getElementById("total-contestants");
       if (contestantsElement) {
         contestantsElement.textContent = totalContestants;
+        console.log(`✅ Updated total contestants: ${totalContestants}`);
+      } else {
+        console.log("❌ Total contestants element not found");
       }
     }
 
@@ -341,6 +358,145 @@ class VotingSystem {
       setTimeout(() => {
         toast.style.display = "none";
       }, 3000);
+    }
+
+    // Scroll to results section after successful vote
+    this.scrollToResults();
+  }
+
+  // Scroll to results section
+  scrollToResults() {
+    const resultsSection = document.getElementById("vote-results-section");
+    if (resultsSection) {
+      setTimeout(() => {
+        resultsSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 1000); // Wait for toast to show first
+    }
+  }
+
+  // Update bar graph results
+  updateBarGraphResults() {
+    if (!this.contestants || this.contestants.length === 0) {
+      return;
+    }
+
+    const resultsList = document.getElementById("results-list");
+    if (!resultsList) return;
+
+    // Sort contestants by vote count (highest first)
+    const sortedContestants = [...this.contestants].sort(
+      (a, b) => b.votes - a.votes
+    );
+
+    // Clear loading state
+    resultsList.innerHTML = "";
+
+    // Create result items
+    sortedContestants.forEach((contestant, index) => {
+      const resultItem = this.createResultItem(contestant, index + 1);
+      resultsList.appendChild(resultItem);
+    });
+
+    // Update summary stats
+    this.updateResultsSummary(sortedContestants);
+  }
+
+  // Create individual result item
+  createResultItem(contestant, rank) {
+    const resultItem = document.createElement("div");
+    resultItem.className = "result-item";
+    resultItem.setAttribute("data-contestant", contestant._id);
+
+    const rankClass =
+      rank === 1 ? "first" : rank === 2 ? "second" : rank === 3 ? "third" : "";
+    const rankIcon =
+      rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : rank;
+
+    // Check if user has already voted for this contestant
+    const hasVoted = this.votingStatus.votedContestants.some(
+      (voted) => voted.contestantId === contestant._id
+    );
+    const canVote = !hasVoted && this.votingStatus.remainingVotes > 0;
+
+    resultItem.innerHTML = `
+      <div class="result-rank ${rankClass}">${rankIcon}</div>
+      <div class="result-info">
+        <img src="${contestant.image}" alt="${
+      contestant.name
+    }" class="result-avatar" />
+        <div class="result-details">
+          <div class="result-name">${contestant.name}</div>
+          <p class="result-description">${contestant.description}</p>
+        </div>
+      </div>
+      <div class="result-bar-container">
+        <div class="result-bar">
+          <div class="result-bar-fill" style="width: ${
+            contestant.votePercentage || 0
+          }%"></div>
+        </div>
+        <div class="result-stats">
+          <div class="result-percentage">${
+            contestant.votePercentage || 0
+          }%</div>
+          <div class="result-votes">${this.formatNumber(
+            contestant.votes
+          )} votes</div>
+          ${
+            canVote
+              ? `<button class="quick-vote-btn" data-contestant="${contestant._id}">
+            <i class="fas fa-heart"></i> Vote
+          </button>`
+              : hasVoted
+              ? `<span class="voted-indicator"><i class="fas fa-check"></i> Voted</span>`
+              : ""
+          }
+        </div>
+      </div>
+    `;
+
+    // Add click event for quick vote button
+    if (canVote) {
+      const quickVoteBtn = resultItem.querySelector(".quick-vote-btn");
+      if (quickVoteBtn) {
+        quickVoteBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          this.handleVoteClick(contestant._id, contestant);
+        });
+      }
+    }
+
+    return resultItem;
+  }
+
+  // Update results summary
+  updateResultsSummary(sortedContestants) {
+    const totalVotes = sortedContestants.reduce(
+      (sum, contestant) => sum + contestant.votes,
+      0
+    );
+    const leader = sortedContestants[0];
+
+    // Update total votes
+    const totalVotesElement = document.getElementById("results-total-votes");
+    if (totalVotesElement) {
+      totalVotesElement.textContent = this.formatNumber(totalVotes);
+    }
+
+    // Update leader
+    const leaderElement = document.getElementById("results-leader");
+    if (leaderElement && leader) {
+      leaderElement.textContent = leader.name;
+    }
+
+    // Update last updated time
+    const lastUpdatedElement = document.getElementById("results-last-updated");
+    if (lastUpdatedElement) {
+      const now = new Date();
+      lastUpdatedElement.textContent = now.toLocaleTimeString();
     }
   }
 
