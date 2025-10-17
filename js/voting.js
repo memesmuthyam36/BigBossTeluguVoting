@@ -27,8 +27,12 @@ class VotingSystem {
     // Load Socket.IO client library if not already loaded
     if (typeof io === "undefined") {
       const script = document.createElement("script");
-      script.src = "/socket.io/socket.io.js";
+      script.src = `${this.socketURL}/socket.io/socket.io.js`;
       script.onload = () => this.connectSocket();
+      script.onerror = () => {
+        console.log("Socket.IO not available, using polling fallback");
+        this.startPolling();
+      };
       document.head.appendChild(script);
     } else {
       this.connectSocket();
@@ -37,6 +41,7 @@ class VotingSystem {
 
   connectSocket() {
     try {
+      console.log("🔌 Attempting to connect to:", this.socketURL);
       this.socket = io(this.socketURL);
 
       this.socket.on("connect", () => {
@@ -45,7 +50,7 @@ class VotingSystem {
       });
 
       this.socket.on("voteUpdate", (data) => {
-        console.log("🗳️ Real-time vote update:", data);
+        console.log("🗳️ Real-time vote update received:", data);
         this.updateContestantVotes(data);
       });
 
@@ -70,6 +75,10 @@ class VotingSystem {
   // Load contestants from MongoDB
   async loadContestants() {
     try {
+      console.log(
+        "📡 Loading contestants from:",
+        `${this.baseURL}/voting/contestants`
+      );
       const response = await fetch(`${this.baseURL}/voting/contestants`);
       const data = await response.json();
 
@@ -90,6 +99,10 @@ class VotingSystem {
   // Load current voting status for the user
   async loadVotingStatus() {
     try {
+      console.log(
+        "📊 Loading voting status from:",
+        `${this.baseURL}/voting/status`
+      );
       const response = await fetch(`${this.baseURL}/voting/status`);
       const data = await response.json();
 
@@ -238,6 +251,7 @@ class VotingSystem {
 
   // Update contestant votes in real-time
   updateContestantVotes(data) {
+    console.log("🔄 Real-time update received:", data);
     const { contestantId, newVoteCount, votePercentage, totalVotes } = data;
 
     // Update the specific contestant's vote count
@@ -246,6 +260,9 @@ class VotingSystem {
     );
     if (voteElement) {
       voteElement.textContent = this.formatNumber(newVoteCount);
+      console.log(
+        `✅ Updated votes for contestant ${contestantId}: ${newVoteCount}`
+      );
     }
 
     // Update progress bar and percentage
@@ -261,14 +278,21 @@ class VotingSystem {
     }
 
     // Update total votes in hero section
+    console.log(`📊 Updating hero stats with total votes: ${totalVotes}`);
     this.updateVoteStats(totalVotes);
   }
 
   // Update vote statistics in the hero section
   updateVoteStats(totalVotes, totalContestants = null) {
+    console.log("🎯 Updating vote stats:", { totalVotes, totalContestants });
     const totalVotesElement = document.getElementById("total-votes");
     if (totalVotesElement) {
       totalVotesElement.textContent = this.formatNumber(totalVotes);
+      console.log(
+        `✅ Updated total votes element: ${this.formatNumber(totalVotes)}`
+      );
+    } else {
+      console.log("❌ Total votes element not found");
     }
 
     if (totalContestants !== null) {
