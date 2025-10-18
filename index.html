@@ -306,7 +306,20 @@
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script src="js/social-share.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-S5XBYEFLQT"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
+      gtag("config", "G-S5XBYEFLQT");
+    </script>
     <!-- Google AdSense -->
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({});
