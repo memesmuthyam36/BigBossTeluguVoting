@@ -10,14 +10,14 @@ const CONFIG = {
     window.location.hostname === "127.0.0.1" ||
     window.location.hostname === ""
       ? "http://localhost:3000"
-      : "https://big-boss-telugu-voting-server.vercel.app",
+      : "https://api.memesmuthyam.blog",
 
   API_BASE_URL:
     window.location.hostname === "localhost" ||
     window.location.hostname === "127.0.0.1" ||
     window.location.hostname === ""
       ? "http://localhost:3000/api"
-      : "https://big-boss-telugu-voting-server.vercel.app/api",
+      : "https://api.memesmuthyam.blog/api",
 
   // For production, update these values:
   // API_URL: 'https://your-backend-domain.com',
