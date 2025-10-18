@@ -1011,18 +1011,20 @@
   }
 
   .voting-stats {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 1rem;
     flex-wrap: wrap;
+    width: 100%;
   }
 
   .stat-card {
-    min-width: 120px;
-    width: auto;
-    flex: 1;
-    max-width: 150px;
-    padding: 1rem 0.5rem;
+    min-width: 200px;
+    width: 100%;
+    max-width: 250px;
+    padding: 1.5rem 1rem;
+    text-align: center;
   }
 
   .stat-number {
@@ -1205,13 +1207,18 @@
 
   .voting-stats {
     flex-direction: column;
-    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
   }
 
   .stat-card {
-    padding: 0.8rem;
-    min-width: 100px;
+    padding: 1rem;
+    min-width: 150px;
     max-width: 200px;
+    width: 100%;
+    text-align: center;
   }
 
   .stat-number {
