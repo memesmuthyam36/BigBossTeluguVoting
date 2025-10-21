@@ -298,6 +298,90 @@ class VotingSystem {
 
     // Render bar graph results
     this.updateBarGraphResults();
+
+    // Update Week 6 results section
+    this.updateWeekResultsSection();
+  }
+
+  // Update Week 6 Results Section with dynamic data
+  updateWeekResultsSection() {
+    if (!this.contestants || this.contestants.length === 0) {
+      return;
+    }
+
+    const resultsGrid = document.getElementById("week-results-grid");
+    const timestampElement = document.getElementById("week-results-time");
+
+    if (!resultsGrid) return;
+
+    // Sort contestants by vote count (highest first)
+    const sortedContestants = [...this.contestants].sort(
+      (a, b) => b.votes - a.votes
+    );
+
+    // Color schemes for different positions
+    const colors = [
+      { border: "#28a745", bg: "#f8fff8", text: "#28a745" }, // 1st - Green
+      { border: "#17a2b8", bg: "#f0faff", text: "#17a2b8" }, // 2nd - Cyan
+      { border: "#007bff", bg: "#f0f8ff", text: "#007bff" }, // 3rd - Blue
+      { border: "#ffc107", bg: "#fffef0", text: "#f57c00" }, // 4th - Yellow/Orange
+      { border: "#fd7e14", bg: "#fff8f0", text: "#fd7e14" }, // 5th - Orange
+      { border: "#dc3545", bg: "#fff0f0", text: "#dc3545" }, // 6th - Red
+      { border: "#6f42c1", bg: "#f8f0ff", text: "#6f42c1" }, // 7th - Purple
+      { border: "#20c997", bg: "#f0fff8", text: "#20c997" }, // 8th - Teal
+      { border: "#e83e8c", bg: "#fff0f8", text: "#e83e8c" }, // 9th - Pink
+      { border: "#6c757d", bg: "#f8f9fa", text: "#6c757d" }, // 10th+ - Gray
+    ];
+
+    // Clear loading state and populate with contestant data
+    resultsGrid.innerHTML = "";
+
+    sortedContestants.forEach((contestant, index) => {
+      const color = colors[Math.min(index, colors.length - 1)];
+
+      const resultDiv = document.createElement("div");
+      resultDiv.style.cssText = `
+        padding: 1rem;
+        border-left: 4px solid ${color.border};
+        background: ${color.bg};
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: default;
+      `;
+
+      // Add hover effect
+      resultDiv.addEventListener("mouseenter", () => {
+        resultDiv.style.transform = "translateX(5px)";
+        resultDiv.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
+      });
+      resultDiv.addEventListener("mouseleave", () => {
+        resultDiv.style.transform = "translateX(0)";
+        resultDiv.style.boxShadow = "none";
+      });
+
+      resultDiv.innerHTML = `
+        <strong style="color: ${color.text}">${contestant.name}</strong> – 
+        ${contestant.votePercentage || 0}% 
+        (${this.formatNumber(contestant.votes)} Votes)
+      `;
+
+      resultsGrid.appendChild(resultDiv);
+    });
+
+    // Update timestamp
+    if (timestampElement) {
+      const now = new Date();
+      const options = {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      };
+      const formattedDate = now.toLocaleString("en-US", options);
+      timestampElement.textContent = formattedDate;
+    }
   }
 
   // Create contestant card element
@@ -488,6 +572,9 @@ class VotingSystem {
 
     // Update bar graph results
     this.updateBarGraphResults();
+
+    // Update Week 6 results section with real-time data
+    this.updateWeekResultsSection();
   }
 
   // Update vote statistics in the hero section

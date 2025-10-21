@@ -470,7 +470,7 @@
       </div>
     </section>
 
-    <!-- Voting Results Week 6 Section -->
+    <!-- Voting Results Week 6 Section (Dynamic) -->
     <section class="info-section" style="background: #f8f9fa; padding: 3rem 0">
       <div class="container">
         <h2
@@ -493,69 +493,21 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           "
         >
-          <div style="display: grid; gap: 1rem">
+          <div id="week-results-grid" style="display: grid; gap: 1rem">
+            <!-- Loading state -->
             <div
-              style="
-                padding: 1rem;
-                border-left: 4px solid #28a745;
-                background: #f8fff8;
-              "
+              class="loading-results"
+              style="text-align: center; padding: 2rem; color: #666"
             >
-              <strong style="color: #28a745">Suman</strong> – 22.59% (27,816
-              Votes)
-            </div>
-            <div
-              style="
-                padding: 1rem;
-                border-left: 4px solid #17a2b8;
-                background: #f0faff;
-              "
-            >
-              <strong style="color: #17a2b8">Thanuja</strong> – 21.56% (26,546
-              Votes)
-            </div>
-            <div
-              style="
-                padding: 1rem;
-                border-left: 4px solid #007bff;
-                background: #f0f8ff;
-              "
-            >
-              <strong style="color: #007bff">Demon Pavan</strong> – 21.04%
-              (25,908 Votes)
-            </div>
-            <div
-              style="
-                padding: 1rem;
-                border-left: 4px solid #ffc107;
-                background: #fffef0;
-              "
-            >
-              <strong style="color: #f57c00">Bharani</strong> – 11.97% (14,736
-              Votes)
-            </div>
-            <div
-              style="
-                padding: 1rem;
-                border-left: 4px solid #fd7e14;
-                background: #fff8f0;
-              "
-            >
-              <strong style="color: #fd7e14">Ramu</strong> – 11.43% (14,084
-              Votes)
-            </div>
-            <div
-              style="
-                padding: 1rem;
-                border-left: 4px solid #dc3545;
-                background: #fff0f0;
-              "
-            >
-              <strong style="color: #dc3545">Divya</strong> – 11.42% (14,062
-              Votes)
+              <i
+                class="fas fa-spinner fa-spin"
+                style="font-size: 2rem; margin-bottom: 1rem"
+              ></i>
+              <p>Loading live voting results...</p>
             </div>
           </div>
           <p
+            id="week-results-timestamp"
             style="
               text-align: center;
               margin-top: 1.5rem;
@@ -564,7 +516,7 @@
             "
           >
             <i class="fas fa-clock"></i> Last update:
-            <strong>17 Oct 2025 (Fri, 10:30 AM)</strong>
+            <strong id="week-results-time">Loading...</strong>
           </p>
         </div>
       </div>
