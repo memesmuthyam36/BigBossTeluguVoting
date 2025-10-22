@@ -12,6 +12,9 @@
       content="Memes Muthyam, Bigg Boss Telugu, memes, voting, contestants, reality show, Telugu"
     />
     <meta name="author" content="Memes Muthyam" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="alternate" hreflang="en" href="https://memesmuthyam.blog/" />
+    <link rel="alternate" hreflang="te" href="https://memesmuthyam.blog/" />
 
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta
@@ -24,10 +27,20 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://memesmuthyam.blog" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:site_name" content="Memes Muthyam" />
     <meta
       property="og:image"
       content="https://memesmuthyam.blog/images/banner.png"
     />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Memes Muthyam - Bigg Boss Telugu Memes, Voting & Updates" />
+    <meta name="twitter:description" content="Latest Bigg Boss Telugu memes, voting, and updates. Join the conversation!" />
+    <meta name="twitter:image" content="https://memesmuthyam.blog/images/banner.png" />
 
     <title>Memes Muthyam - Bigg Boss Telugu Memes, Voting & Updates</title>
     <link rel="icon" type="image/png" href="images/logo.png" />
@@ -60,6 +73,77 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
+
+    <!-- Structured Data - Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Memes Muthyam",
+      "alternateName": "Memes Muthyam - Bigg Boss Telugu",
+      "url": "https://memesmuthyam.blog",
+      "description": "Your ultimate destination for Bigg Boss Telugu memes, voting, and latest updates. Join the conversation and vote for your favorite contestants!",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://memesmuthyam.blog/voting.html?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Memes Muthyam",
+      "url": "https://memesmuthyam.blog",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://memesmuthyam.blog/images/logo.png",
+        "width": 200,
+        "height": 200
+      },
+      "description": "Your ultimate destination for Bigg Boss Telugu memes, voting, and updates.",
+      "sameAs": [
+        "https://facebook.com/profile.php?id=61581872902901",
+        "https://www.instagram.com/memes_muthyams/",
+        "https://youtube.com/@memesmuthyams?si=iDe0ZfhjSB3pijUI",
+        "https://www.threads.com/@memes_muthyams"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "url": "https://memesmuthyam.blog/contact.html"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Memes Muthyam - Bigg Boss Telugu Memes, Voting & Updates",
+      "description": "Latest Bigg Boss Telugu memes, voting, and updates. Join the conversation and vote for your favorite contestants!",
+      "url": "https://memesmuthyam.blog",
+      "inLanguage": "en-IN",
+      "isPartOf": {
+        "@type": "WebSite",
+        "url": "https://memesmuthyam.blog"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://memesmuthyam.blog"
+        }]
+      }
+    }
+    </script>
   </head>
   <body>
     <!-- Header -->
