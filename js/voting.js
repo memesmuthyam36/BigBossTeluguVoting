@@ -299,11 +299,11 @@ class VotingSystem {
     // Render bar graph results
     this.updateBarGraphResults();
 
-    // Update Week 6 results section
+    // Update Week 7 results section
     this.updateWeekResultsSection();
   }
 
-  // Update Week 6 Results Section with dynamic data
+  // Update Week 7 Results Section with dynamic data
   updateWeekResultsSection() {
     if (!this.contestants || this.contestants.length === 0) {
       return;
@@ -573,7 +573,7 @@ class VotingSystem {
     // Update bar graph results
     this.updateBarGraphResults();
 
-    // Update Week 6 results section with real-time data
+    // Update Week 7 results section with real-time data
     this.updateWeekResultsSection();
   }
 
