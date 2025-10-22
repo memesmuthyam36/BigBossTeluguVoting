@@ -43,6 +43,18 @@
       crossorigin="anonymous"
     ></script>
 
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', {
+        'page_title': 'Memes Muthyam - Bigg Boss Telugu',
+        'page_path': '/'
+      });
+    </script>
+
     <!-- Font Awesome for icons -->
     <link
       rel="stylesheet"
@@ -100,11 +112,11 @@
         <div class="hero-content">
           <h1 class="hero-title">Welcome to Memes Muthyam</h1>
           <p class="hero-description">
-            Get the latest Bigg Boss Telugu memes, vote for your favorite
-            contestants, and stay updated with all the drama!
+            Get the latest Bigg Boss Telugu memes, <strong>Bigg Boss Telugu voting</strong> for your favorite
+            contestants, and stay updated with all the drama and entertainment!
           </p>
           <div class="hero-buttons">
-            <a href="voting.html" class="btn btn-primary">Vote Now</a>
+            <a href="voting.html" class="btn btn-primary" title="Bigg Boss Telugu Voting - Vote for Your Favorite Contestant">Bigg Boss Telugu Voting</a>
             <a href="#blog" class="btn btn-secondary">Read Latest</a>
           </div>
         </div>
@@ -154,9 +166,9 @@
     <section class="voting-preview">
       <div class="container">
         <div class="voting-content">
-          <h2 class="section-title">Vote for Your Favorite Contestant</h2>
+          <h2 class="section-title">Bigg Boss Telugu Voting - Cast Your Vote Online</h2>
           <p class="voting-description">
-            Your vote matters! Help your favorite contestant stay in the house.
+            <strong>Vote for Bigg Boss Telugu</strong> contestants now! Your vote matters and can help your favorite contestant stay in the house. Free online voting available 24/7.
           </p>
           <div class="voting-schedule-info" id="home-voting-schedule">
             <i class="fas fa-clock"></i>
@@ -174,7 +186,7 @@
               <span class="stat-label">Contestants</span>
             </div>
           </div>
-          <a href="voting.html" class="btn btn-primary btn-large">Vote Now</a>
+          <a href="voting.html" class="btn btn-primary btn-large" title="Click here for Bigg Boss Telugu Online Voting">Start Bigg Boss Telugu Voting →</a>
         </div>
       </div>
     </section>

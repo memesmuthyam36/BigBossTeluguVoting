@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /js/admin.js
+
+# Sitemap location
+Sitemap: https://memesmuthyam.blog/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
