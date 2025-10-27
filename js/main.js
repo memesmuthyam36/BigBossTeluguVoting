@@ -266,7 +266,7 @@ class BiggBossBlog {
     // Voting schedule configuration
     this.votingSchedule = {
       openDay: 1, // Monday
-      openHour: 20, // 8 PM
+      openHour: 6, // 6 AM
       closeDay: 5, // Friday
     };
 
@@ -366,7 +366,7 @@ class BiggBossBlog {
       scheduleEl.className = "voting-schedule-info voting-closed";
       if (icon) icon.className = "fas fa-lock";
       if (span) {
-        span.innerHTML = `<strong>Voting is CLOSED</strong> - Opens in ${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s<br><small>Voting: Monday 8 PM - Friday 11:59 PM</small>`;
+        span.innerHTML = `<strong>Voting is CLOSED</strong> - Opens in ${countdown.days}d ${countdown.hours}h ${countdown.minutes}m ${countdown.seconds}s<br><small>Voting: Monday 6 AM - Friday 11:59 PM</small>`;
       }
     }
   }
